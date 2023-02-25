@@ -1,9 +1,9 @@
 package com.esgi.persistence.repositories
 
-import com.esgi.Hero
 import com.esgi.HeroPersistence
+import com.esgi.persistence.documents.HeroDocument
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface HeroRepository : MongoRepository<Hero, String>, HeroPersistence
+interface HeroRepository : MongoRepository<HeroDocument, String>, HeroPersistence
