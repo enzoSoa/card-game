@@ -1,14 +1,17 @@
 package com.esgi.controllers
 
 import com.esgi.HeroCreationUseCase
-import com.esgi.HeroPersistence
 import com.esgi.dto.CreateHeroRequest
+import com.esgi.persistence.documents.HeroDocument
 import com.esgi.persistence.repositories.HeroRepository
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
+import java.util.Optional
 
 @RestController
 @RequestMapping("hero")
@@ -19,5 +22,17 @@ class HeroController(private val persistence: HeroRepository) {
         val heroCreationUseCase = HeroCreationUseCase(persistence)
         heroCreationUseCase.execute(request.name, request.speciality, request.rarity)
         return "done"
+    }
+
+    @GetMapping("")
+    @ResponseBody
+    fun getHeroes(): List<HeroDocument> {
+        return persistence.findAll()
+    }
+
+    @GetMapping("{id}")
+    @ResponseBody
+    fun getHeroById(@PathVariable id: String): Optional<HeroDocument> {
+        return persistence.findById(id)
     }
 }
