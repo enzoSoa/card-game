@@ -2,7 +2,6 @@ package com.esgi
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import kotlin.Exception
 
 class DeckOpeningUseCaseTest() {
     private val heroA = Hero("Alfred", Speciality.TANK, Rarity.COMMON, 10.0, 10.0, 10.0, 0, 1)
