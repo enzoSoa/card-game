@@ -1,9 +1,8 @@
 package com.esgi.controllers
 
-import com.esgi.DeckOpeningUseCase
-import com.esgi.Hero
-import com.esgi.UserCreationUseCase
+import com.esgi.*
 import com.esgi.dto.CreateUserRequest
+import com.esgi.dto.FightingRequest
 import com.esgi.dto.OpenDeckRequest
 import com.esgi.exceptions.NotFoundException
 import com.esgi.persistence.documents.UserDocument
@@ -61,5 +60,27 @@ class UserController(private val persistence: UserRepository, private val heroPe
         user.deck = userNewState.deck
 
         return persistence.save(user)
+    }
+
+    @PostMapping("{attackerId}/fight")
+    @ResponseBody
+    fun fight(@PathVariable attackerId: String, @RequestBody request: FightingRequest): FightResult {
+        val attackerDocument = persistence.findById(attackerId)
+        val defenderDocument = persistence.findById(request.defenderId)
+
+        if (attackerDocument.isEmpty) throw NotFoundException("No attacker available with this id: $attackerId")
+        else if (attackerDocument.isEmpty) throw NotFoundException("No defender available with this id: ${request.defenderId}")
+
+        val attacker = attackerDocument.get()
+        val defender = defenderDocument.get()
+
+        if (attacker.deck.size < request.attackerHeroIndex) throw NotFoundException("The hero index for attacker seems to be incorrect")
+        else if (defender.deck.size < request.defenderHeroIndex) throw NotFoundException("The hero index for defender seems to be incorrect")
+
+        val attackerHero = attacker.deck.get(request.attackerHeroIndex)
+        val defenderHero = defender.deck.get(request.defenderHeroIndex)
+        val heroesfightingUseCase = HeroesFightingUseCase()
+
+        return heroesfightingUseCase.execute(attackerHero, defenderHero)
     }
 }
