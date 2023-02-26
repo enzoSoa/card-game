@@ -1,6 +1,6 @@
 package com.esgi
 
-import com.esgi.persistences.HeroPersistence
+import com.esgi.interfaces.HeroPersistence
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
 
