@@ -1,5 +1,6 @@
 package com.esgi
 
+import com.esgi.persistences.UserPersistence
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
 

@@ -1,8 +1,6 @@
 package com.esgi
 
-interface HeroPersistence {
-    fun insert(hero: Hero)
-}
+import com.esgi.persistences.HeroPersistence
 
 class HeroCreationUseCase(private val persistence: HeroPersistence) {
     private val heroCreationService = HeroCreationService()
