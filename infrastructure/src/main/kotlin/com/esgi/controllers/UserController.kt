@@ -3,6 +3,7 @@ package com.esgi.controllers
 import com.esgi.Hero
 import com.esgi.UserCreationUseCase
 import com.esgi.dto.CreateUserRequest
+import com.esgi.exceptions.NotFoundException
 import com.esgi.persistence.documents.UserDocument
 import com.esgi.persistence.repositories.UserRepository
 import org.springframework.web.bind.annotation.*
@@ -27,7 +28,10 @@ class UserController(private val persistence: UserRepository) {
 
     @GetMapping("{userId}")
     @ResponseBody
-    fun getUserById(@PathVariable userId: String): Optional<UserDocument> {
-        return persistence.findById(userId)
+    fun getUserById(@PathVariable userId: String): UserDocument {
+        val user = persistence.findById(userId)
+        if (user.isEmpty) throw NotFoundException("No user with this id has been found")
+        return persistence.findById(userId).get()
+    }
     }
 }
