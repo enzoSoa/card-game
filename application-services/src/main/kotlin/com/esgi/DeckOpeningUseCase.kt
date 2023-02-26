@@ -7,8 +7,8 @@ class DeckOpeningUseCase() {
 
     private fun userHasEnoughCoin(coins: Int, type: DeckType): Boolean {
         return when(type) {
-            DeckType.SILVER -> coins < 3
-            DeckType.DIAMOND -> coins < 5
+            DeckType.SILVER -> coins > 3
+            DeckType.DIAMOND -> coins > 5
         }
     }
 

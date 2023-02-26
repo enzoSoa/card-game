@@ -9,12 +9,16 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class UserDocument(
     @Id val id: String? = null,
     val nickname: String,
-    val coins: Int,
-    val deck: List<Hero>
+    var coins: Int,
+    var deck: List<Hero>
 ) {
     constructor(user: User) : this(
         nickname = user.nickname,
         coins = user.coins,
         deck = user.deck,
     )
+
+    fun toUser(): User {
+        return User(nickname, coins, deck)
+    }
 }
