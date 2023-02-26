@@ -1,4 +1,4 @@
-package com.esgi.persistences
+package com.esgi.interfaces
 
 import com.esgi.Hero
 

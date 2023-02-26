@@ -1,6 +1,6 @@
 package com.esgi
 
-import com.esgi.persistences.UserPersistence
+import com.esgi.interfaces.UserPersistence
 
 class UserCreationUseCase(private val persistence: UserPersistence) {
     private val userCreationService = UserCreationService()
