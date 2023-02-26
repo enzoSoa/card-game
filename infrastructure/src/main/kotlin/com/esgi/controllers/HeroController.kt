@@ -2,6 +2,7 @@ package com.esgi.controllers
 
 import com.esgi.HeroCreationUseCase
 import com.esgi.dto.CreateHeroRequest
+import com.esgi.exceptions.NotFoundException
 import com.esgi.persistence.documents.HeroDocument
 import com.esgi.persistence.repositories.HeroRepository
 import org.springframework.web.bind.annotation.GetMapping
@@ -33,6 +34,8 @@ class HeroController(private val persistence: HeroRepository) {
     @GetMapping("{heroId}")
     @ResponseBody
     fun getHeroById(@PathVariable heroId: String): Optional<HeroDocument> {
-        return persistence.findById(heroId)
+        val hero = persistence.findById(heroId)
+        if (hero.isEmpty) throw NotFoundException("No hero with this id has been found")
+        return hero
     }
 }
