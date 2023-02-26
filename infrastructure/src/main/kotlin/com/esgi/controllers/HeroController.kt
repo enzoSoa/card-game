@@ -30,9 +30,9 @@ class HeroController(private val persistence: HeroRepository) {
         return persistence.findAll()
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{heroId}")
     @ResponseBody
-    fun getHeroById(@PathVariable id: String): Optional<HeroDocument> {
-        return persistence.findById(id)
+    fun getHeroById(@PathVariable heroId: String): Optional<HeroDocument> {
+        return persistence.findById(heroId)
     }
 }
