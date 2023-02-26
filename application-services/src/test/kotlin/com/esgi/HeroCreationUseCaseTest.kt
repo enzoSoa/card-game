@@ -15,6 +15,6 @@ class HeroCreationUseCaseTest() {
 
         useCase.execute(name, speciality, rarity)
 
-        verify(persistence).save(expectedHero)
+        verify(persistence).insert(expectedHero)
     }
 }
