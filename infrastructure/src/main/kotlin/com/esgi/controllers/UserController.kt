@@ -33,5 +33,12 @@ class UserController(private val persistence: UserRepository) {
         if (user.isEmpty) throw NotFoundException("No user with this id has been found")
         return persistence.findById(userId).get()
     }
+
+    @GetMapping("{userId}/deck")
+    @ResponseBody
+    fun getUserDeck(@PathVariable userId: String): List<Hero> {
+        val user = persistence.findById(userId)
+        if (user.isEmpty) throw NotFoundException("No user with this id has been found")
+        return user.get().deck
     }
 }
