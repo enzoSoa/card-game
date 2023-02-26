@@ -1,3 +1,3 @@
 package com.esgi
 
-data class User(val nickname: String, var coins: Int, val deck: MutableList<Hero>)
+data class User(val nickname: String, val coins: Int, val deck: List<Hero>)

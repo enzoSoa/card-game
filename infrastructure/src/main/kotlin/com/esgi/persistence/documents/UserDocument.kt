@@ -10,7 +10,7 @@ data class UserDocument(
     @Id val id: String? = null,
     val nickname: String,
     val coins: Int,
-    val deck: MutableList<Hero>
+    val deck: List<Hero>
 ) {
     constructor(user: User) : this(
         nickname = user.nickname,
