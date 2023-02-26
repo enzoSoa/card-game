@@ -1,11 +1,9 @@
 package com.esgi
 
-class DeckOpeningService(private val commonDeck: List<Hero>,
-                         private val rareDeck: List<Hero>,
-                         private val legendaryDeck: List<Hero>) {
+class DeckOpeningService() {
     private val deckGenerationService = DeckGenerationService()
 
-    fun execute(type: DeckType): List<Hero> {
+    fun execute(type: DeckType, commonDeck: List<Hero>, rareDeck: List<Hero>, legendaryDeck: List<Hero>): List<Hero> {
         return when(type) {
             DeckType.SILVER -> deckGenerationService.execute(3, listOf(
                 DeckWithProbability(commonDeck,75),

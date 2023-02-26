@@ -8,7 +8,7 @@ class DeckOpeningServiceTest {
     private val heroA = Hero("Alfred", Speciality.TANK, Rarity.COMMON, 10.0, 10.0, 10.0, 0, 1)
     private val heroB = Hero("Batman", Speciality.TANK, Rarity.RARE, 100.0, 100.0, 100.0, 0, 1)
     private val heroC = Hero("Cat Woman", Speciality.TANK, Rarity.LEGENDARY, 1000.0, 1000.0, 1000.0, 0, 1)
-    private val deckOpeningService = DeckOpeningService(listOf(heroA),listOf(heroB),listOf(heroC))
+    private val deckOpeningService = DeckOpeningService()
 
     @RepeatedTest(5)
     fun deck_should_have_silver_apparition_rate() {
@@ -17,7 +17,7 @@ class DeckOpeningServiceTest {
         var legendaryCount = 0
 
         for (i in 1..100) {
-            val openedDeck = deckOpeningService.execute(DeckType.SILVER)
+            val openedDeck = deckOpeningService.execute(DeckType.SILVER, listOf(heroA), listOf(heroB), listOf(heroC))
 
             commonCount += openedDeck.count {it == heroA}
             rareCount += openedDeck.count {it == heroB}
@@ -42,7 +42,7 @@ class DeckOpeningServiceTest {
         var legendaryCount = 0
 
         for (i in 1..100) {
-            val openedDeck = deckOpeningService.execute(DeckType.DIAMOND)
+            val openedDeck = deckOpeningService.execute(DeckType.DIAMOND, listOf(heroA), listOf(heroB), listOf(heroC))
 
             commonCount += openedDeck.count {it == heroA}
             rareCount += openedDeck.count {it == heroB}
@@ -62,13 +62,13 @@ class DeckOpeningServiceTest {
 
     @Test
     fun silver_deck_should_have_3_cards() {
-        val openedDeck = deckOpeningService.execute(DeckType.SILVER)
+        val openedDeck = deckOpeningService.execute(DeckType.SILVER, listOf(heroA), listOf(heroB), listOf(heroC))
         Assertions.assertEquals(3, openedDeck.size)
     }
 
     @Test
     fun diamond_deck_should_have_5_cards() {
-        val openedDeck = deckOpeningService.execute(DeckType.DIAMOND)
+        val openedDeck = deckOpeningService.execute(DeckType.DIAMOND, listOf(heroA), listOf(heroB), listOf(heroC))
         Assertions.assertEquals(5, openedDeck.size)
     }
 }
