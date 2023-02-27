@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 
 class HeroDamagingServiceTest {
     private val heroDamagingService = HeroDamagingService()
+
     private val tank = Hero("tank", Speciality.TANK, Rarity.COMMON, 1000.0, 100.0, 20.0)
     private val assassin = Hero("assassin", Speciality.ASSASSIN, Rarity.COMMON, 1000.0, 100.0, 20.0)
     private val mage = Hero("mage", Speciality.MAGE, Rarity.COMMON, 1000.0, 100.0, 20.0)

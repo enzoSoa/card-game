@@ -11,14 +11,4 @@ data class UserDocument(
     val nickname: String,
     var coins: Int,
     var deck: List<Hero>
-) {
-    constructor(user: User) : this(
-        nickname = user.nickname,
-        coins = user.coins,
-        deck = user.deck,
-    )
-
-    fun toUser(): User {
-        return User(nickname, coins, deck)
-    }
-}
+)

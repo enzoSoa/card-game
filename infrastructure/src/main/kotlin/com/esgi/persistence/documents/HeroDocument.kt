@@ -1,6 +1,5 @@
 package com.esgi.persistence.documents
 
-import com.esgi.Hero
 import com.esgi.Rarity
 import com.esgi.Speciality
 import org.springframework.data.annotation.Id
@@ -17,15 +16,4 @@ data class HeroDocument(
     var armor: Double,
     var exp: Int = 0,
     var level: Int = 1
-) {
-    constructor(hero: Hero) : this(
-        name = hero.name,
-        speciality = hero.speciality,
-        rarity = hero.rarity,
-        hp = hero.hp,
-        power = hero.power,
-        armor = hero.armor,
-        exp = hero.exp,
-        level = hero.level
-    )
-}
+)

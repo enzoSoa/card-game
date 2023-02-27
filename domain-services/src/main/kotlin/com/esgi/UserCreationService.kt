@@ -1,7 +1,7 @@
 package com.esgi
 
-class UserCreationService {
-    fun execute(name: String): User {
-        return User(name, 4, listOf<Hero>())
+open class UserCreationService {
+    open fun execute(name: String): User {
+        return User(name, 4, listOf())
     }
 }

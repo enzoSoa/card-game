@@ -1,30 +1,40 @@
 package com.esgi
 
+import com.esgi.persistence.HeroPersistence
+import com.esgi.persistence.UserPersistence
+
 import java.lang.Exception
 
-class DeckOpeningUseCase() {
-    val deckOpeningService = DeckOpeningService()
+class DeckOpeningUseCase(
+    private val deckOpeningService: DeckOpeningService,
+    private val userHasEnoughCoinService: UserHasEnoughCoinsService,
+    private val userPersistence: UserPersistence,
+    private val heroPersistence: HeroPersistence,
+) {
 
-    private fun userHasEnoughCoin(coins: Int, type: DeckType): Boolean {
-        return when(type) {
-            DeckType.SILVER -> coins >= 3
-            DeckType.DIAMOND -> coins >= 5
+    fun execute(userId: String, deckType: DeckType): User {
+        val user = userPersistence.findById(userId).orElseThrow {
+            Error("No user with this id has been found")
         }
-    }
 
-    fun execute(user: User, type: DeckType, hero: List<Hero>): User {
-        if (userHasEnoughCoin(user.coins, type)) {
-            val commonHeroes = hero.filter { it.rarity == Rarity.COMMON }
-            val rareHeroes = hero.filter { it.rarity == Rarity.RARE }
-            val legendaryHeroes = hero.filter { it.rarity == Rarity.LEGENDARY }
+        val heroes: List<Hero> = heroPersistence.findAll()
 
-            val generatedDeck = deckOpeningService.execute(type, commonHeroes, rareHeroes, legendaryHeroes)
+        if (userHasEnoughCoinService.execute(user.coins, deckType)) {
+            val commonHeroes = heroes.filter { it.rarity == Rarity.COMMON }
+            val rareHeroes = heroes.filter { it.rarity == Rarity.RARE }
+            val legendaryHeroes = heroes.filter { it.rarity == Rarity.LEGENDARY }
 
-            return User(
+            val generatedDeck = deckOpeningService.execute(deckType, commonHeroes, rareHeroes, legendaryHeroes)
+
+            val updatedUser = User(
                 user.nickname,
-                user.coins - if (type == DeckType.DIAMOND) 5 else 3,
+                user.coins - if (deckType == DeckType.DIAMOND) 5 else 3,
                 user.deck + generatedDeck
             )
+
+            userPersistence.save(updatedUser)
+
+            return updatedUser
 
         } else throw Exception("user don't have enough coins")
     }
